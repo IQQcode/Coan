@@ -2,6 +2,6 @@
 
 ### 安利一个在线学习Java的文档
 
-- 在线阅读地址：📔[https://iqqcode.github.io/Coan-Interview/#/](https://iqqcode.github.io/Coan/#/)
+- 在线阅读地址：📔[https://iqqcodes.gitee.io/coan](https://iqqcodes.gitee.io/coan)
 - Github：💎[https://github.com/IQQcode/Coan](https://github.com/IQQcode/Coan)
-- 码云：🎈[https://iqqcode.gitee.io/coan-interview]()
+- 码云：🎈[https://gitee.com/iqqcodes/Coan](https://gitee.com/iqqcodes/Coan)
