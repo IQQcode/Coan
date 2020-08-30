@@ -1,8 +1,7 @@
 ## 【项目构建思路】<!-- {docsify-ignore} -->
 
-<p align="center">
-<img src = "./a-1Yike-Chatib.assets/default.svg"  width="30%"  height="30% alt="coan"  title="coan" />
-</p>
+<img src="a-1Yike-Chatib.assets/default.png" alt="default" style="zoom:25%;" />
+
 
 **基于SpringBoot构建的WebSocket通信聊天室**
 
