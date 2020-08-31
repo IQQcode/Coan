@@ -541,10 +541,6 @@ phoneId: 1
 }
 ```
 
-<img src="../../../Backup/Phuonhub_docs/Document.assets/image-20200801203116956.png" alt="image-20200801203116956" style="zoom:80%;" />
-
-<img src="../../../Backup/Phuonhub_docs/Document.assets/image-20200801203229838.png" alt="image-20200801203229838" style="zoom:80%;" />
-
 #### 4. 查询地址
 
 ```
@@ -764,7 +760,7 @@ orderId: "1586242977480760998"
 
 前端启动`Home.vue`
 
-<img src="../../../Backup/Phuonhub_docs/后端文档.assets/image-20200803074901678.png" alt="image-20200803074901678" style="zoom:80%;" />
+![image-20200803074901678](b-1PhoneHub.assets/image-20200803074901678.png)
 
 后端启动`GET  /phone/index`
 
@@ -790,7 +786,7 @@ Access to XMLHttpRequest at 'http://localhost:8181/phone/index' from origin 'htt
 
 ![](b-1PhoneHub.assets/20200801164026-1598839409727.png)
 
-<img src="../../../Backup/Phuonhub_docs/后端文档.assets/image-20200801164346017.png" alt="image-20200801164346017" style="zoom:67%;" />
+![image-20200801164346017](b-1PhoneHub.assets/image-20200801164346017.png)
 
 `PhoneCategory`中有5个字段，但是categories仅需要2个，不符合前端请求的规范
 
@@ -806,7 +802,7 @@ private List<PhoneInfoVO> phones;
 
 **PhoneCategoryVO**转为json对象后，categoryName对应的json对象的名字。理解为二次命名
 
-<img src="../../../Backup/Phuonhub_docs/后端文档.assets/image-20200801184909260.png" alt="image-20200801184909260" style="zoom: 80%;" />
+![image-20200801184909260](b-1PhoneHub.assets/image-20200801184909260.png)
 
 > 在Service层还是展示的java对象原有名字，在Controller返回为json时`JsonProperty`才做替换
 
