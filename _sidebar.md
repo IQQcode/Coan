@@ -2,8 +2,7 @@
 * Project
   
   * [Yike-Chatib](./docs/Project/a-1Yike-Chatib)
-  * [Phonehub](./docs/Project/b-1PhoneHub.md)
-  
+  * [PhoneHub](./docs/Project/b-1PhoneHub.md)
   
 * Java
 
