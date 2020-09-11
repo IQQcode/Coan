@@ -1,7 +1,7 @@
 ## 【项目预览】<!-- {docsify-ignore} -->
-<p align="center">
-<img src = "./b-1PhoneHub.assets/fun1.png"  width="100%"  height="100% alt="coan"  title="coan" />
-</p>
+![fun1](b-1PhoneHub.assets/fun1.png)
+
+![fun2](b-1PhoneHub.assets/fun2.png)
 
 <p align="center">
 <img src = "./b-1PhoneHub.assets/fun2.png"  width="100%"  height="100% alt="coan"  title="coan" />
@@ -12,6 +12,7 @@
 
 ## 项目目录
 
+```java
  ├── src
  │   ├── main
  │   │   ├── java
@@ -75,6 +76,7 @@
  │   │       ├── application.yml
  │   │       ├── static
  │   │       └── templates
+```
 
 
 
