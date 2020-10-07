@@ -3,12 +3,7 @@
 
 ![fun2](b-1PhoneHub.assets/fun2.png)
 
-<p align="center">
-<img src = "./b-1PhoneHub.assets/fun2.png"  width="100%"  height="100% alt="coan"  title="coan" />
-</p>
-
-
-
+<br>
 
 ## 项目目录
 
