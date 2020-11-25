@@ -21,21 +21,33 @@
     window.$docsify = {
       name: 'iqqcode 码上行动',
       repo: 'https://github.com/IQQcode',
+      // 侧边栏支持，默认加载的是项目根目录下的_sidebar.md文件
+      loadSidebar: true,
+      // 导航栏支持，默认加载的是项目根目录下的_navbar.md文件
+      loadNavbar: true,
+      // 封面支持，默认加载的是项目根目录下的_coverpage.md文件
+      coverpage: true,
+      maxLevel: 3,//最大支持渲染的标题层级
+      subMaxLevel: 2,
+      homepage: 'README.md',
+      externalLinkTarget: '_blank',
+      auto2top: true,//切换页面后是否自动跳转到页面顶部
       maxLevel: 3,//最大支持渲染的标题层级
       subMaxLevel: 3,
       homepage: 'README.md',
       externalLinkTarget: '_blank',
-      coverpage: true,
       loadSidebar: true,
       auto2top: true,//切换页面后是否自动跳转到页面顶部
       //全文搜索
       search: {
-        //maxAge: 86400000, // 过期时间，单位毫秒，默认一天
+        maxAge: 86400000, // 过期时间，单位毫秒，默认一天
         paths: 'auto',
         placeholder: '🔍 Type to search ',
         noData: '😞 No Results! ',
         // 搜索标题的最大程级, 1 - 6
-        depth: 3,
+        depth: 4,
+        hideOtherSidebarContent: false,
+        namespace: 'Coan',
       },
       plugins: [
         EditOnGithubPlugin.create('https://github.com/IQQcode/Coan')

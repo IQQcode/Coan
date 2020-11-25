@@ -1,6 +1,6 @@
 > Coading  on  action  now
 <p align="center">
-<img src = "./media/logo.svg"  width="25%"  height="15% alt="coan"  title="coan" />
+<img src = "./media/logo.svg"  width="26%"  height="26% alt="coan"  title="coan" />
 </p>
 <h1 align="center">iqqcode</h1>
 
