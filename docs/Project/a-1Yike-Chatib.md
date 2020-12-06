@@ -965,7 +965,6 @@ public void onError(Session session, Throwable error) {
 
 - 服务器能接收到数据，但转发失败
 
-- 出现乱码
 
 【解决方式】： 主要是在`Message`处出现问题，检查传递的参数是否正确，通过DeBug调试解析Session是否正确以及是否将消息放入容器中
 
@@ -1005,6 +1004,17 @@ public void onError(Session session, Throwable error) {
 ### 前端交互问题
 
 **前端页面效果的处理（Bing接口，消息动画和表情包）**
+
+**出现乱码：前后端编解码不一致造成**
+
+**数据库存放Emoji表情：**
+
+1. 数据库层面出发：Mysql的编码从utf8转换成utf8mb4
+2. 转译层面出发：转义成字符串放入到数据库，使用的时候反转义可以直接转义成表情，再把内容传进去
+
+> EvanOne.emoji存放到数据库.[https://blog.csdn.net/qq_41139830/article/details/81159380](https://blog.csdn.net/qq_41139830/article/details/81159380)
+
+
 
 <br>
 
@@ -1067,3 +1077,15 @@ Spring并不是专门的网络框架，没有对网络做深入的优化。如�
 2. 聊天软件有PC版和App版，在App上聊的天，打开PC版要能够看到
 
 打开某个会话（单聊、群聊、公众号），下拉界面，客户端向服务端请求这个会话的聊天数据。<font color = red>消息漫游需要以会话为检索维度。消息漫游拉取数据的频率相对较低</font>
+
+<br>
+
+<hr>
+
+<br>
+
+**进阶参考的系列文章**
+
+[1]即时通讯网.新手入门一篇就够：从零开发移动端IM.[http://www.52im.net/thread-464-1-1.html](http://www.52im.net/thread-464-1-1.html)
+
+[2]即时通讯网.移动端IM登录时拉取数据如何作到省流量.[http://www.52im.net/thread-787-1-1.html](http://www.52im.net/thread-787-1-1.html)
