@@ -83,7 +83,7 @@ Room加密
 
 🔗我的博文章：[WebSocket协议](https://blog.csdn.net/weixin_43232955/article/details/107887829)
 
-Websocket是**HML5**开始提供的一种在**单个TCP连接上进行全双工通讯**的协议。没有了 Request 和 Response 的概念，两者地位完全平等，连接一旦建立，就建立了真持久性连接，双方可以随时向对方发送数据。使得服务器和客户端交互数据更加简单。浏览器和客户端只需要完成一次握手，就可以创建持久性的连接，并进行双向的数据
+Websocket是**HTML5**开始提供的一种在**单个TCP连接上进行全双工通讯**的协议。没有了 Request 和 Response 的概念，两者地位完全平等，连接一旦建立，就建立了真持久性连接，双方可以随时向对方发送数据。使得服务器和客户端交互数据更加简单。浏览器和客户端只需要完成一次握手，就可以创建持久性的连接，并进行双向的数据
 
 ![640](a-1Yike-Chatib.assets/640.png)
 
@@ -239,7 +239,7 @@ setInterval(() => {
 - 系统消息：消息推送，所有用户
 - 私发推送：具体用户
 
-### 2.2 SpringBoot 集成 websocket
+### 2.2 SpringBoot 集成 WebSocket
 
 **pom.xml**
 
@@ -320,7 +320,7 @@ public class MyWebSocket {
 }
 ```
 
-注入ServerEndpointExporter bean对象，自动注册使用了@ServerEndpoint注解的bean
+注入ServerEndpointExporter bean对象，自动注册使用了`@ServerEndpoint`注解的bean
 
 ```java
 @Configuration
@@ -959,7 +959,7 @@ public void onError(Session session, Throwable error) {
 
 ## 6. 踩坑记录
 
-### 消息获取不到
+### 6.1 消息获取不到
 
 - 消息发送成功，对方接收不到
 
@@ -968,7 +968,7 @@ public void onError(Session session, Throwable error) {
 
 【解决方式】： 主要是在`Message`处出现问题，检查传递的参数是否正确，通过DeBug调试解析Session是否正确以及是否将消息放入容器中
 
-### 私聊踩坑
+### 6.2 私聊踩坑
 
 **消息格式的设置**
 
@@ -1001,7 +1001,7 @@ public void onError(Session session, Throwable error) {
 
 ![image-20201206142827323](a-1Yike-Chatib.assets/image-20201206142827323.png)
 
-### 前端交互问题
+### 6.3 前端交互问题
 
 **前端页面效果的处理（Bing接口，消息动画和表情包）**
 
@@ -1009,12 +1009,59 @@ public void onError(Session session, Throwable error) {
 
 **数据库存放Emoji表情：**
 
-1. 数据库层面出发：Mysql的编码从utf8转换成utf8mb4
+1. 数据库层面出发：MySQL的编码从utf8转换成utf8mb4
 2. 转译层面出发：转义成字符串放入到数据库，使用的时候反转义可以直接转义成表情，再把内容传进去
 
-> EvanOne.emoji存放到数据库.[https://blog.csdn.net/qq_41139830/article/details/81159380](https://blog.csdn.net/qq_41139830/article/details/81159380)
+-------------
 
+  MySQL 的 utf8编码的一个字符最多存3个字节，而一个 emoji 表情占4个字节，所以 utf8不支持存储 emoji 表情。
 
+> 一般公司是不会因为一个项目而改变数据库的编码方式的，所以还是第二种方式比较靠谱。
+
+**Java工具类emoji-java进行处理**
+
+引入Maven依赖
+
+```xml
+<dependency>
+  <groupId>com.github.binarywang</groupId>
+  <artifactId>java-emoji-converter</artifactId>
+  <version>0.0.1</version>
+</dependency>
+```
+
+处理类
+
+```java
+// 表情处理类
+public final class EmojiUtil {
+ 
+  private static EmojiConverter emojiConverter = EmojiConverter.getInstance();
+  
+  /**
+   * 将emojiStr转为 带有表情的字符
+   * @param emojiStr
+   * @return
+   */
+  public static String emojiConverterUnicodeStr(String emojiStr){
+     String result = emojiConverter.toUnicode(emojiStr);
+     return result;
+  }
+  
+  /**
+   * 带有表情的字符串转换为编码
+   * @param str
+   * @return
+   */
+  public static String emojiConverterToAlias(String str){
+    String result=emojiConverter.toAlias(str);
+    return result;
+  }
+ 
+}
+```
+
+> 存入值时处理或者用正则过滤👉[**Java对Emoji表情的两种处理方式**](https://blog.csdn.net/APM800/article/details/84999935)
 
 <br>
 
