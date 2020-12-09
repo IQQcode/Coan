@@ -213,7 +213,7 @@ setInterval(() => {
 **客户端 ——> 服务器**
 
 ```json
-{"toName":"张三","message":"你好"}
+{"toName":"李四","message":"你好"}
 ```
 
 **客户端 <—— 服务器**
@@ -221,7 +221,7 @@ setInterval(() => {
 - 系统消息格式：
 
 ```json
-{"isSystem":true,"fromName":null,"message":["李四","王五"]}
+{"isSystem":true,"fromName":null,"message":["大家好"]}
 ```
 
 - 私发消息格式
@@ -253,21 +253,14 @@ setInterval(() => {
 **WebSocketConfig**
 
 ```java
-package cn.coder4j.study.example.websocket.config;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 
-/**
- * @author buhao
- * @version WebSocketConfig.java, v 0.1 2019-10-18 15:45 buhao
- */
-@Configuration
-@EnableWebSocket
+@Configuration    //声明当前类为配置类
+@EnableWebSocket  // 配置WebSocket
 publicclass WebSocketConfig {
-
     @Bean
     public ServerEndpointExporter serverEndpoint() {
         returnnew ServerEndpointExporter();
@@ -340,8 +333,8 @@ public class WebSocketConfig {
 
 这里有几个注解需要注意一下，首先是他们的包都在 **javax.websocket **下。并不是 spring 提供的，而 jdk 自带的，下面是他们的具体作用。
 
-1. **@ServerEndpoint**
-2. 通过这个 spring boot 就可以知道你暴露出去的 ws 应用的路径，有点类似我们经常用`@RequestMapping`。比如你的启动端口是 8080，而这个注解的值是 ws，那我们就可以通过 `ws://127.0.0.1:8080/ws` 来连接你的应用
+1. **@ServerEndpoint** 注解式定义Endpoint对象，代表WebSocket链接的一端
+2. 通过这个 springboot 就可以知道你暴露出去的 ws 应用的路径，有点类似我们经常用`@RequestMapping`。比如你的启动端口是 8080，而这个注解的值是 ws，那我们就可以通过 `ws://127.0.0.1:8080/ws` 来连接你的应用
 3. **@OnOpen**
 4. 当 websocket 建立连接成功后会触发这个注解修饰的方法，注意它有一个  Session 参数
 5. **@OnClose**
@@ -351,7 +344,7 @@ public class WebSocketConfig {
 9. **@OnError**
 10. 当 websocket 建立连接时出现异常会触发这个注解修饰的方法，注意它有一个  Session 参数
 
-另外一点就是服务端如何发送消息给客户端，服务端发送消息必须通过上面说的 Session 类，通常是在@OnOpen 方法中，当连接成功后把 session 存入 Map 的 value，key 是与 session 对应的用户标识，当要发送的时候通过 key 获得 session 再发送，这里可以通过  **session.getBasicRemote\*()\*.sendText\*(*)** 来对客户端发送消息。
+另外一点就是服务端如何发送消息给客户端，服务端发送消息必须通过上面说的 Session 类，通常是在@OnOpen 方法中，当连接成功后把 session 存入 Map 的 value，key 是与 session 对应的用户标识，当要发送的时候通过 key 获得 session 再发送，这里可以通过  **session.getBasicRemote().sendText()** 来对客户端发送消息。
 
 
 
@@ -405,9 +398,7 @@ public class WebSocketConfig {
 
 2. 当前用户对象获取后，要放入容器中存储，保证同步放到了`CopyOnWriteArraySet`线程安全的Set中
 
-	> [线程安全的CopyOnWrite容器](https://blog.csdn.net/linsongbin1/article/details/54581787?utm_medium=referral)
-	>
-	> [JAVA中的COPYONWRITE容器](https://coolshell.cn/articles/11175.html)
+	> 🔗[CopyOnWrite容器解析，通过COW思想聊聊CopyOnWriteArrayList](https://blog.csdn.net/weixin_43232955/article/details/110854648)
 
 #### 人数统计
 
@@ -521,6 +512,26 @@ websocket.onmessage = function(event){
 
 ![image-20200819162124596](a-1Yike-Chatib.assets/image-20200819162124596.png)
 
+**用户 与 当前所在的聊天室 的关系：**
+
+```java
+//与某个客户端的连接会话，需要通过它来给指定的客户端发送数据
+private Session session;
+
+//用以记录用户和房间号的对应关系(sessionId, room)
+private static Map<String, String> RoomForUser = new ConcurrentHashMap<String, String>();
+
+//用以记录房间和其中用户群的对应关系(room,List<用户>)
+public static Map<String, CopyOnWriteArraySet<User>> UserForRoom = new ConcurrentHashMap<String, CopyOnWriteArraySet<User>>();
+
+//用以记录房间和其中用户群的对应关系(room,List<用户>)
+public static Map<String, String> PwdForRoom = new ConcurrentHashMap<String, String>();
+```
+
+![](https://iqqcode-blog.oss-cn-beijing.aliyuncs.com/imgs02/20201208223646.png)
+
+
+
 #### 私聊
 
 【消息格式】
@@ -549,7 +560,7 @@ private User getUser(Session session) {
 【消息格式】
 
 ```json
-{"isSystem":true,"fromName":null,"message":["李四","王五"]}
+{"isSystem":true,"fromName":null,"message":["大家好"]}
 ```
 
 遍历**Users**集合，服务器为每位用户推送消息
@@ -630,10 +641,6 @@ function getOnlion(room) {
     });
 }
 ```
-
-
-
-
 
 --------
 
@@ -941,7 +948,10 @@ public void onError(Session session, Throwable error) {
 }
 ```
 
+- [x] 断线自动连接
+- [x] 设置超时时间，当用户1min之内没有再次加入到聊天室，则删除该User的session
 
+<br>
 
 ### 5.2 首页优化
 
